@@ -21,6 +21,9 @@
 	# Commit all changes
 	ca = !git add -A && git commit -av
 
+	# Checkout a branch
+	co = checkout
+
 	# Switch to a branch, creating it if necessary
 	go = "!f() { git checkout -b \"$1\" 2> /dev/null || git checkout \"$1\"; }; f"
 
@@ -87,7 +90,7 @@
 [core]
 
 	# Use sublime as an editor
-	editor subl
+	editor = subl
 
 	# Use custom `.gitignore` and `.gitattributes`
 	excludesfile = ~/.gitignore
