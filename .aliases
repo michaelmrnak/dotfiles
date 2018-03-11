@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+###### Begin my aliases ######
 diffy(){
         #display usage if no parameters given
         if [ -z "$1" ] || [ -z "$2" ]; then
@@ -50,6 +51,11 @@ alias dc='docker-compose'
 alias dcupedit='dc up -d edit && dc logs edit'
 alias dcpull='dc pull --ignore-pull-failures'
 
+alias sublbp="subl ~/.bash_profile"
+alias sublaliases="subl ~/.aliases"
+alias sourcebp="source ~/.bash_profile"
+
+###### Begin dotfiles aliases ######
 
 # Easier navigation: .., ..., ...., ....., ~ and -
 alias ..="cd .."
@@ -60,9 +66,9 @@ alias ~="cd ~" # `cd` is probably faster to type though
 alias -- -="cd -"
 
 # Shortcuts
-alias d="cd ~/Documents/Dropbox"
-alias dl="cd ~/Downloads"
-alias dt="cd ~/Desktop"
+# alias d="cd ~/Documents/Dropbox"
+# alias dl="cd ~/Downloads"
+# alias dt="cd ~/Desktop"
 alias p="cd ~/projects"
 alias g="git"
 
@@ -100,7 +106,7 @@ alias sudo='sudo '
 alias week='date +%V'
 
 # Get macOS Software Updates, and update installed Ruby gems, Homebrew, npm, and their installed packages
-alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup; npm install npm -g; npm update -g; sudo gem update --system; sudo gem update; sudo gem cleanup'
+# alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup; npm install npm -g; npm update -g; sudo gem update --system; sudo gem update; sudo gem cleanup'
 
 # Google Chrome
 alias chrome='/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome'
@@ -121,13 +127,11 @@ alias flush="dscacheutil -flushcache && killall -HUP mDNSResponder"
 alias lscleanup="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user && killall Finder"
 
 # Canonical hex dump; some systems have this symlinked
-command -v hd > /dev/null || alias hd="hexdump -C"
-
+# command -v hd > /dev/null || alias hd="hexdump -C"
 # macOS has no `md5sum`, so use `md5` as a fallback
-command -v md5sum > /dev/null || alias md5sum="md5"
-
+# command -v md5sum > /dev/null || alias md5sum="md5"
 # macOS has no `sha1sum`, so use `shasum` as a fallback
-command -v sha1sum > /dev/null || alias sha1sum="shasum"
+# command -v sha1sum > /dev/null || alias sha1sum="shasum"
 
 # JavaScriptCore REPL
 jscbin="/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Resources/jsc";
@@ -185,8 +189,8 @@ done
 command -v grunt > /dev/null && alias grunt="grunt --stack"
 
 # Stuff I never really use but cannot delete either because of http://xkcd.com/530/
-alias stfu="osascript -e 'set volume output muted true'"
-alias pumpitup="osascript -e 'set volume output volume 100'"
+# alias stfu="osascript -e 'set volume output muted true'"
+# alias pumpitup="osascript -e 'set volume output volume 100'"
 
 # Kill all the tabs in Chrome to free up memory
 # [C] explained: http://www.commandlinefu.com/commands/view/402/exclude-grep-from-your-grepped-output-of-ps-alias-included-in-description
