@@ -1,5 +1,56 @@
 #!/usr/bin/env bash
 
+diffy(){
+        #display usage if no parameters given
+        if [ -z "$1" ] || [ -z "$2" ]; then
+                echo "Usage: diffy <branch_name> <branch_to_diff_against> <optional filename>"
+        else
+                now=$(date +%m-%d-%Y_%H-%M-%S)
+                git diff $1..$2 > ${3:-~/diffs/$now.log}
+                echo "$now.log diff file created."
+                subl ~/diffs/$now.log
+        fi
+}
+
+# Unit Testing
+alias mprununit="../vendor/bin/codecept build && ../vendor/bin/codecept run -v --debug"
+alias codecover="../vendor/bin/codecept build && ../vendor/bin/codecept run -vvv --coverage --coverage-html"
+alias mprununitone="../vendor/bin/codecept run -vvv"
+
+# docker exec
+alias dexec='docker exec -it'
+alias dexectest='docker exec -it edit cd test && ../vendor/bin/codecept build && ../vendor/bin/codecept run -v --debug'
+alias cupdate='docker exec -it edit composer update'
+
+# Flush edit Redis Container
+alias mpflush='docker exec -it edit-redis redis-cli flushdb'
+alias mpflushall='docker exec -it edit-redis redis-cli flushall'
+
+# Enter the edit redis CLI
+alias rediscli='docker exec -it edit-redis redis-cli'
+
+# Docker Aliases
+alias deval='eval "$(docker-machine env dinghy)"'
+alias dps='dockereval && docker ps'
+alias dm='docker-machine'
+alias dbuild='./bin/docker/build'
+alias dstart='./bin/docker/start'
+alias drestart='./bin/docker/restart'
+alias dstop='./bin/docker/stop'
+alias dstop_postgres='./bin/docker/stop_postgres'
+alias dstart_postgres='./bin/docker/stop_postgres'
+alias dstop_redis='./bin/docker/stop_redis'
+alias dstart_redis='./bin/docker/stop_redis'
+alias dsetup='./bin/docker/setup'
+alias dshell='./bin/docker/shell'
+alias dhttp='docker start http-proxy'
+
+# docker-compose aliases
+alias dc='docker-compose'
+alias dcupedit='dc up -d edit && dc logs edit'
+alias dcpull='dc pull --ignore-pull-failures'
+
+
 # Easier navigation: .., ..., ...., ....., ~ and -
 alias ..="cd .."
 alias ...="cd ../.."
