@@ -1,0 +1,15 @@
+{
+	"file_exclude_paterns": [
+		".php_cs.cache"
+	],
+	"folder_exclude_paterns": [
+		"_output",
+		".git"
+	],
+	"font_size": 13,
+	"ignored_packages":
+	[
+		"Vintage"
+	],
+	"scroll_past_end": true
+}
