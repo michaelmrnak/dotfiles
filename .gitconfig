@@ -4,7 +4,7 @@
 	l = log --pretty=oneline -n 20 --graph --abbrev-commit
 
 	# View the current working tree status using the short format
-	s = status -s
+	st = status -s
 
 	# Show the diff between the latest commit and the current state
 	d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
@@ -86,6 +86,9 @@
 
 [core]
 
+	# Use sublime as an editor
+	editor subl
+
 	# Use custom `.gitignore` and `.gitattributes`
 	excludesfile = ~/.gitignore
 	attributesfile = ~/.gitattributes
@@ -134,8 +137,9 @@
 
 [commit]
 
+	# COMMENTING OUT HERE UNTIL PART OF WORKFLOW
 	# https://help.github.com/articles/signing-commits-using-gpg/
-	gpgsign = true
+	# gpgsign = true
 
 [diff]
 
@@ -158,13 +162,17 @@
 	log = true
 
 [push]
-
+	
+	# COMMENTING OUT HERE TO AVOID WORKFLOW AND COMMIT HISTORY DIFFERENCES
 	# https://git-scm.com/docs/git-config#git-config-pushdefault
-	default = simple
+	# default = simple
 	# Make `git push` push relevant annotated tags when pushing branches out.
-	followTags = true
+	# followTags = true
 
 # URL shorthands
+
+[url "https://"]
+	insteadOf = git://
 
 [url "git@github.com:"]
 
