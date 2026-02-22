@@ -2,10 +2,22 @@
 # =============================================================================
 # Mac Dev Bootstrap Script
 # Run this on a fresh Mac to get up and running:
-#   curl -fsSL https://raw.githubusercontent.com/YOUR_USERNAME/dotfiles/main/bootstrap.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/michaelmrnak/dotfiles/main/bootstrap.sh | bash
 # =============================================================================
 
 set -e  # Exit on any error
+
+# Guard against being run via curl | bash (breaks sudo on macOS)
+if [ ! -t 0 ]; then
+  echo ""
+  echo "⚠️  Don't pipe this script — download and run it directly:"
+  echo ""
+  echo "  curl -fsSL https://raw.githubusercontent.com/YOUR_USERNAME/dotfiles/main/bootstrap.sh -o bootstrap.sh"
+  echo "  chmod +x bootstrap.sh"
+  echo "  ./bootstrap.sh"
+  echo ""
+  exit 1
+fi
 
 # Colors for output
 RED='\033[0;31m'
