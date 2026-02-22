@@ -1,0 +1,89 @@
+# =============================================================================
+# .zshrc — managed by chezmoi
+# Edit via: chezmoi edit ~/.zshrc
+# =============================================================================
+
+# Path to Oh My Zsh
+export ZSH="$HOME/.oh-my-zsh"
+
+# Theme — using robbyrussell (clean default). To use Starship instead,
+# set ZSH_THEME="" and see the Starship section at the bottom.
+ZSH_THEME="robbyrussell"
+
+# Plugins
+plugins=(
+  git                  # git aliases (gst, gco, gp, etc.)
+  direnv               # auto-loads .envrc files
+  fzf                  # fuzzy finder keybindings
+  zoxide               # smarter cd (use 'z' instead of 'cd')
+  web-search           # google/gh from terminal
+  copypath             # copy current path to clipboard
+  jsontools            # pp_json, is_json helpers
+)
+
+source $ZSH/oh-my-zsh.sh
+
+# =============================================================================
+# Homebrew (Apple Silicon path)
+# =============================================================================
+if [[ $(uname -m) == "arm64" ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+# =============================================================================
+# mise — universal version manager (node, python, ruby, go, rust, etc.)
+# Docs: https://mise.jdx.dev
+# Install a runtime:  mise use --global node@lts
+# Per-project:        mise use node@20  (creates .mise.toml in project dir)
+# =============================================================================
+eval "$(mise activate zsh)"
+
+# =============================================================================
+# direnv — hook into shell
+# =============================================================================
+eval "$(direnv hook zsh)"
+
+# =============================================================================
+# zoxide — smarter cd
+# =============================================================================
+eval "$(zoxide init zsh)"
+
+# =============================================================================
+# fzf — fuzzy finder
+# =============================================================================
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# =============================================================================
+# Aliases
+# =============================================================================
+
+# Navigation
+alias ..="cd .."
+alias ...="cd ../.."
+alias ll="eza -la --icons --git"        # better ls
+alias ls="eza --icons"
+alias cat="bat"                          # better cat
+
+# Git shortcuts (beyond what oh-my-zsh provides)
+alias gs="git status"
+alias glog="git log --oneline --graph --decorate"
+
+# Dotfiles
+alias dot="chezmoi"
+alias dotedit="chezmoi edit"
+alias dotapply="chezmoi apply"
+alias dotsync="chezmoi update"           # pull latest from GitHub and apply
+
+# mise shorthands
+alias mx="mise x --"                     # run a tool in the current env
+alias mu="mise use"                      # set a version for current project
+alias mug="mise use --global"            # set a global default version
+
+# Misc
+alias reload="source ~/.zshrc"
+alias path='echo -e ${PATH//:/\\n}'
+
+# =============================================================================
+# Local overrides (not committed to git — for machine-specific config)
+# =============================================================================
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local

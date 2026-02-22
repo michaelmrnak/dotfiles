@@ -1,0 +1,36 @@
+# =============================================================================
+# .zshenv — environment variables, loaded for ALL zsh sessions
+# managed by chezmoi — edit via: chezmoi edit ~/.zshenv
+#
+# NOTE: This file is committed to git. Do NOT put actual secret values here.
+# Use .zshenv.local (gitignored) for real secrets, or use direnv (.envrc)
+# for per-project secrets.
+# =============================================================================
+
+# Editor
+export EDITOR="code --wait"
+export VISUAL="$EDITOR"
+
+# Language / locale
+export LANG="en_US.UTF-8"
+export LC_ALL="en_US.UTF-8"
+
+# Homebrew — opt out of analytics
+export HOMEBREW_NO_ANALYTICS=1
+export HOMEBREW_NO_AUTO_UPDATE=1   # update manually with `brew update`
+
+# fzf default options
+export FZF_DEFAULT_COMMAND="rg --files --hidden --follow --glob '!.git'"
+export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border"
+
+# bat theme
+export BAT_THEME="OneHalfDark"
+
+# =============================================================================
+# API Keys — DO NOT put real values here.
+# Instead, put them in ~/.zshenv.local (gitignored) or use direnv.
+#
+# Example ~/.zshenv.local:
+#   export ANTHROPIC_API_KEY="sk-ant-..."
+# =============================================================================
+# export ANTHROPIC_API_KEY=""  # <- set in ~/.zshenv.local or via direnv
