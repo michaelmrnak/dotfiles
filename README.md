@@ -13,8 +13,10 @@ My Mac dev environment, managed with [chezmoi](https://www.chezmoi.io/).
 ### Every new Mac after that
 
 ```bash
-# 1. Run the bootstrap script — this is the only command you need
-curl -fsSL https://raw.githubusercontent.com/YOUR_USERNAME/dotfiles/main/bootstrap.sh | bash
+# 1. Download and run the bootstrap script
+curl -fsSL https://raw.githubusercontent.com/YOUR_USERNAME/dotfiles/main/bootstrap.sh -o bootstrap.sh
+chmod +x bootstrap.sh
+./bootstrap.sh
 
 # 2. Restart your terminal (open Warp)
 
