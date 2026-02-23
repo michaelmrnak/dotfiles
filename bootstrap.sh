@@ -2,7 +2,7 @@
 # =============================================================================
 # Mac Dev Bootstrap Script
 # Run this on a fresh Mac to get up and running:
-#   curl -fsSL https://raw.githubusercontent.com/michaelmrnak/dotfiles/main/bootstrap.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/YOUR_USERNAME/dotfiles/main/bootstrap.sh | bash
 # =============================================================================
 
 set -e  # Exit on any error
