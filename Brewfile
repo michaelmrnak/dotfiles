@@ -8,6 +8,7 @@
 # Core CLI Tools
 # -----------------------------------------------------------------------------
 brew "git"
+brew "gpg"               # signature verification for mise
 brew "chezmoi"           # dotfiles manager
 brew "mise"              # universal version manager (node, python, ruby, go, rust, etc.)
 brew "direnv"            # per-directory env vars (great for API keys)
@@ -27,7 +28,6 @@ brew "git-delta"         # better git diffs
 # -----------------------------------------------------------------------------
 # Apps (Casks)
 # -----------------------------------------------------------------------------
-cask "warp"              # terminal
 cask "visual-studio-code"
 
 # Optional — uncomment what you want:
