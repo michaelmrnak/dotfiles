@@ -1,8 +1,10 @@
 #!/bin/bash
 # =============================================================================
 # Mac Dev Bootstrap Script
-# Run this on a fresh Mac to get up and running:
-#   curl -fsSL https://raw.githubusercontent.com/YOUR_USERNAME/dotfiles/main/bootstrap.sh | bash
+# Download and run on a fresh Mac:
+#   curl -fsSL https://raw.githubusercontent.com/YOUR_USERNAME/dotfiles/main/bootstrap.sh -o bootstrap.sh
+#   chmod +x bootstrap.sh
+#   ./bootstrap.sh
 # =============================================================================
 
 set -e  # Exit on any error
@@ -62,7 +64,31 @@ else
 fi
 
 # =============================================================================
-# 3. chezmoi — apply dotfiles
+# 3. Oh My Zsh — install BEFORE chezmoi applies .zshrc
+# =============================================================================
+log "Checking Oh My Zsh..."
+if [ ! -d "$HOME/.oh-my-zsh" ]; then
+  log "Installing Oh My Zsh..."
+  RUNZSH=no KEEP_ZSHRC=yes \
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  success "Oh My Zsh installed"
+else
+  success "Oh My Zsh already installed"
+fi
+
+# =============================================================================
+# 4. Set zsh as default shell
+# =============================================================================
+if [ "$SHELL" != "$(which zsh)" ]; then
+  log "Setting zsh as default shell..."
+  chsh -s "$(which zsh)"
+  success "Default shell set to zsh"
+else
+  success "zsh is already the default shell"
+fi
+
+# =============================================================================
+# 5. chezmoi — apply dotfiles
 # =============================================================================
 log "Checking chezmoi..."
 if ! command -v chezmoi &>/dev/null; then
@@ -79,35 +105,11 @@ chezmoi init --apply "$DOTFILES_REPO"
 success "Dotfiles applied"
 
 # =============================================================================
-# 4. Homebrew Bundle — install everything in Brewfile
+# 6. Homebrew Bundle — install everything in Brewfile
 # =============================================================================
 log "Installing packages from Brewfile..."
 brew bundle --file="$(chezmoi source-path)/Brewfile"
 success "Homebrew packages installed"
-
-# =============================================================================
-# 5. Oh My Zsh
-# =============================================================================
-log "Checking Oh My Zsh..."
-if [ ! -d "$HOME/.oh-my-zsh" ]; then
-  log "Installing Oh My Zsh..."
-  RUNZSH=no KEEP_ZSHRC=yes \
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-  success "Oh My Zsh installed"
-else
-  success "Oh My Zsh already installed"
-fi
-
-# =============================================================================
-# 6. Set zsh as default shell
-# =============================================================================
-if [ "$SHELL" != "$(which zsh)" ]; then
-  log "Setting zsh as default shell..."
-  chsh -s "$(which zsh)"
-  success "Default shell set to zsh"
-else
-  success "zsh is already the default shell"
-fi
 
 # =============================================================================
 # 7. VS Code — install 'code' CLI command
@@ -148,7 +150,6 @@ echo -e "${GREEN}  Bootstrap complete! Restart your terminal.${NC}"
 echo -e "${GREEN}============================================${NC}"
 echo ""
 echo "Next steps:"
-echo "  1. Open Warp terminal"
-echo "  2. Add secrets: echo 'export ANTHROPIC_API_KEY=\"sk-ant-...\"' >> ~/.zshenv.local"
-echo "  3. Install language runtimes: mise use --global node@lts"
-echo "  4. Run 'chezmoi edit' to customize your dotfiles"
+echo "  1. Add secrets: echo 'export ANTHROPIC_API_KEY=\"sk-ant-...\"' >> ~/.zshenv.local"
+echo "  2. Install language runtimes: mise use --global node@lts"
+echo "  3. Run 'chezmoi edit' to customize your dotfiles"
