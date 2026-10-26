@@ -9,7 +9,6 @@
 # -----------------------------------------------------------------------------
 brew "git"
 brew "gpg"               # signature verification for mise
-brew "chezmoi"           # dotfiles manager
 brew "mise"              # universal version manager (node, python, ruby, go, rust, etc.)
 brew "direnv"            # per-directory env vars (great for API keys)
 brew "gh"                # GitHub CLI
@@ -33,6 +32,6 @@ cask "visual-studio-code"
 # Optional — uncomment what you want:
 # cask "arc"             # browser
 # cask "1password"       # password manager
-# cask "1password-cli"   # 1password CLI (great for secrets in chezmoi)
+# cask "1password-cli"   # 1password CLI
 # cask "tableplus"       # database GUI
 # cask "figma"

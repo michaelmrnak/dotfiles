@@ -1,6 +1,5 @@
 # =============================================================================
-# .zshrc — managed by chezmoi
-# Edit via: chezmoi edit ~/.zshrc
+# .zshrc — symlinked to ~/.zshrc from ~/dev/dotfiles
 # =============================================================================
 
 # Path to Oh My Zsh
@@ -67,12 +66,6 @@ alias cat="bat"                          # better cat
 # Git shortcuts (beyond what oh-my-zsh provides)
 alias gs="git status"
 alias glog="git log --oneline --graph --decorate"
-
-# Dotfiles
-alias dot="chezmoi"
-alias dotedit="chezmoi edit"
-alias dotapply="chezmoi apply"
-alias dotsync="chezmoi update"           # pull latest from GitHub and apply
 
 # mise shorthands
 alias mx="mise x --"                     # run a tool in the current env

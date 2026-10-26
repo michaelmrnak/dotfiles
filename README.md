@@ -1,6 +1,6 @@
 # dotfiles
 
-My Mac dev environment, managed with [chezmoi](https://www.chezmoi.io/).
+My Mac dev environment. Dotfiles live in this repo and are symlinked into `$HOME`.
 
 ## Setup
 
@@ -8,7 +8,7 @@ My Mac dev environment, managed with [chezmoi](https://www.chezmoi.io/).
 
 1. Create a new **public** repo called `dotfiles` on [github.com](https://github.com/new)
 2. Upload all the files from this repo via the GitHub web UI (drag and drop works)
-3. Update `YOUR_USERNAME` with your actual GitHub username in `bootstrap.sh` and `dot_config/chezmoi/chezmoi.toml`
+3. Update `YOUR_USERNAME` with your actual GitHub username in `bootstrap.sh`
 
 ### Every new Mac after that
 
@@ -29,7 +29,7 @@ mise use --global go@latest
 echo 'export ANTHROPIC_API_KEY="sk-ant-..."' >> ~/.zshenv.local
 ```
 
-The bootstrap script handles everything else — Homebrew, chezmoi, Oh My Zsh, mise, VS Code, and cloning this repo to the right place.
+The bootstrap script handles everything else — Homebrew, Oh My Zsh, mise, VS Code, and cloning this repo to `~/dev/dotfiles` and symlinking the dotfiles.
 
 ---
 
@@ -38,7 +38,6 @@ The bootstrap script handles everything else — Homebrew, chezmoi, Oh My Zsh, m
 | Tool | Purpose |
 |------|---------|
 | Homebrew | Package manager |
-| chezmoi | Dotfiles manager |
 | git + git-delta | Version control with better diffs |
 | Oh My Zsh | Shell framework |
 | **mise** | **Universal version manager — Node, Python, Ruby, Go, Rust, Java, and more** |
@@ -83,21 +82,15 @@ Per-project `.mise.toml` files can be committed to your repos so anyone with mis
 
 ## Daily Dotfiles Workflow
 
+`~/.zshrc` and `~/.zshenv` are symlinks into `~/dev/dotfiles`, so editing them edits the repo.
+
 ```bash
-# Edit a dotfile
-chezmoi edit ~/.zshrc
-
-# See what would change
-chezmoi diff
-
-# Apply changes to your machine
-chezmoi apply
-
-# Pull latest from GitHub and apply (on a second machine)
-chezmoi update
+cd ~/dev/dotfiles
+git diff                 # see what changed
+git commit -am "..."     # commit when you want
+git push                 # push when you want
+git pull                 # on a second machine
 ```
-
-With `autoCommit` and `autoPush` enabled in `chezmoi.toml`, changes are committed and pushed to GitHub automatically when you run `chezmoi apply`.
 
 ---
 
@@ -136,14 +129,9 @@ Then run `direnv allow` once. Vars load automatically when you `cd` in, unload w
 ## Adding New Dotfiles
 
 ```bash
-# Tell chezmoi to manage a file
-chezmoi add ~/.some-new-config
-
-# Edit it
-chezmoi edit ~/.some-new-config
-
-# Apply + auto-commit/push
-chezmoi apply
+# Move the file into the repo and symlink it back
+mv ~/.some-new-config ~/dev/dotfiles/some-new-config
+ln -s ~/dev/dotfiles/some-new-config ~/.some-new-config
 ```
 
 ---
@@ -152,15 +140,8 @@ chezmoi apply
 
 ```
 dotfiles/
-├── bootstrap.sh          # Run on a fresh Mac
-├── Brewfile              # All Homebrew packages
-├── dot_zshrc             # → ~/.zshrc
-├── dot_zshenv            # → ~/.zshenv
-├── dot_gitconfig.tmpl    # → ~/.gitconfig (template with name/email)
-├── dot_gitignore_global  # → ~/.gitignore_global
-└── dot_config/
-    └── chezmoi/
-        └── chezmoi.toml  # chezmoi config
+├── bootstrap.sh   # Run on a fresh Mac
+├── Brewfile       # All Homebrew packages
+├── zshrc          # ~/.zshrc  (symlink)
+└── zshenv         # ~/.zshenv (symlink)
 ```
-
-chezmoi maps filenames: `dot_` → `.`, `.tmpl` → processed as a Go template.

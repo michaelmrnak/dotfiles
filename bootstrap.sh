@@ -64,7 +64,7 @@ else
 fi
 
 # =============================================================================
-# 3. Oh My Zsh — install BEFORE chezmoi applies .zshrc
+# 3. Oh My Zsh — install BEFORE .zshrc is linked
 # =============================================================================
 log "Checking Oh My Zsh..."
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
@@ -88,27 +88,31 @@ else
 fi
 
 # =============================================================================
-# 5. chezmoi — apply dotfiles
+# 5. Dotfiles — clone repo and symlink into $HOME
 # =============================================================================
-log "Checking chezmoi..."
-if ! command -v chezmoi &>/dev/null; then
-  log "Installing chezmoi..."
-  brew install chezmoi
-  success "chezmoi installed"
-else
-  success "chezmoi already installed"
+DOTFILES_REPO="https://github.com/YOUR_USERNAME/dotfiles"
+DOTFILES_DIR="$HOME/dev/dotfiles"
+if [ ! -d "$DOTFILES_DIR" ]; then
+  log "Cloning $DOTFILES_REPO..."
+  mkdir -p "$(dirname "$DOTFILES_DIR")"
+  git clone "$DOTFILES_REPO" "$DOTFILES_DIR"
 fi
 
-DOTFILES_REPO="https://github.com/YOUR_USERNAME/dotfiles"
-log "Applying dotfiles from $DOTFILES_REPO..."
-chezmoi init --apply "$DOTFILES_REPO"
-success "Dotfiles applied"
+for f in zshrc zshenv; do
+  target="$HOME/.$f"
+  if [ -e "$target" ] && [ ! -L "$target" ]; then
+    mv "$target" "$target.bak"
+    warn "Backed up existing $target to $target.bak"
+  fi
+  ln -sfn "$DOTFILES_DIR/$f" "$target"
+done
+success "Dotfiles linked"
 
 # =============================================================================
 # 6. Homebrew Bundle — install everything in Brewfile
 # =============================================================================
 log "Installing packages from Brewfile..."
-brew bundle --file="$(chezmoi source-path)/Brewfile"
+brew bundle --file="$DOTFILES_DIR/Brewfile"
 success "Homebrew packages installed"
 
 # =============================================================================
@@ -152,4 +156,4 @@ echo ""
 echo "Next steps:"
 echo "  1. Add secrets: echo 'export ANTHROPIC_API_KEY=\"sk-ant-...\"' >> ~/.zshenv.local"
 echo "  2. Install language runtimes: mise use --global node@lts"
-echo "  3. Run 'chezmoi edit' to customize your dotfiles"
+echo "  3. Edit your dotfiles in $DOTFILES_DIR"

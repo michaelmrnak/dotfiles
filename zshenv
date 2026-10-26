@@ -1,6 +1,6 @@
 # =============================================================================
 # .zshenv — environment variables, loaded for ALL zsh sessions
-# managed by chezmoi — edit via: chezmoi edit ~/.zshenv
+# symlinked to ~/.zshenv from ~/dev/dotfiles
 #
 # NOTE: This file is committed to git. Do NOT put actual secret values here.
 # Use .zshenv.local (gitignored) for real secrets, or use direnv (.envrc)
@@ -14,6 +14,9 @@ export VISUAL="$EDITOR"
 # Language / locale
 export LANG="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
+
+# Native installs (Claude Code, etc.) — independent of mise node versions
+export PATH="$HOME/.local/bin:$PATH"
 
 # Homebrew — opt out of analytics
 export HOMEBREW_NO_ANALYTICS=1
